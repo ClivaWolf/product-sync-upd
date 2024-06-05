@@ -3,6 +3,7 @@ export interface IProduct {
     name: string;
     price: number;
     description: string;
+    quantityId: string;
 }
 
 export class Product implements IProduct {
@@ -10,6 +11,7 @@ export class Product implements IProduct {
         public id: string,
         public name: string,
         public price: number,
-        public description: string
+        public description: string,
+        public quantityId: string
     ) {}
 }
