@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Product } from 'src/core/entities/product';
-import { IDataServices } from 'src/core';
-import { CreateProductDTO, UpdateProductDTO } from 'src/core/dtos/product.dto';
+import { IDataServices } from '../../core/abstracts/data-services.abstract';
+import { CreateProductDTO, UpdateProductDTO } from '../../core/dtos/product.dto';
 import { ProductFactoryService } from './product-factory.service';
 
 @Injectable()
@@ -13,6 +13,10 @@ export class ProductUseCase {
 
     public getAll(): Promise<Product[]> {
         return this.dataServices.products.getAll();
+    }
+
+    public get(productId: string): Promise<Product> {
+        return this.dataServices.products.get(productId);
     }
 
     public create(dto: CreateProductDTO): Promise<Product> {
