@@ -52,7 +52,7 @@ describe('ProductController', () => {
       mockProductUseCase.create.mockResolvedValue(result);
 
       expect(await controller.create(dto)).toBe(result);
-    });
+    }); 
   });
 
   describe('update', () => {
