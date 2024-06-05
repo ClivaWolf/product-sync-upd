@@ -7,7 +7,6 @@ export class ProductFactoryService {
     public create(dto: CreateProductDTO): Product {
         const newProduct = new Product();
 
-        newProduct.id = dto.id;
         newProduct.name = dto.name;
         newProduct.price = dto.price;
         newProduct.description = dto.description;
@@ -19,7 +18,6 @@ export class ProductFactoryService {
     public update(dto: UpdateProductDTO): Product {
         const newProduct = new Product();
 
-        newProduct.id = dto.id;
         newProduct.name = dto.name;
         newProduct.price = dto.price;
         newProduct.description = dto.description;

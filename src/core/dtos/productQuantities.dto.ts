@@ -3,10 +3,6 @@ import { PartialType } from '@nestjs/mapped-types';
 import { Product } from '../entities';
 
 export class CreateProductQuantitiesDto {
-    @IsString()
-    @IsNotEmpty()
-    public id: string;
-
     @IsNumber()
     @IsNotEmpty()
     public quantity: number;

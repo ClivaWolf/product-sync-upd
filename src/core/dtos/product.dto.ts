@@ -4,10 +4,6 @@ import { PartialType } from '@nestjs/mapped-types';
 export class CreateProductDTO {
     @IsString()
     @IsNotEmpty()
-    public id: string;
-
-    @IsString()
-    @IsNotEmpty()
     public name: string;
 
     @IsString()
