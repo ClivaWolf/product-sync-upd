@@ -17,7 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
                 autoLoadEntities: true,
                 synchronize: true,
                 //src\core\entities\user.ts
-                entities: [__dirname + '/**/*.entity{.ts,.js}'],
+                entities: ['./model/*.entity{.ts,.js}'],
             }),
             inject: [ConfigService],
         }), 
