@@ -1,4 +1,4 @@
-import { Product } from "src/domain/entities/product";
+import { Product } from "src/core/entities/product";
 
 export interface IProductRepository {
     create(product: Product): Promise<boolean>;

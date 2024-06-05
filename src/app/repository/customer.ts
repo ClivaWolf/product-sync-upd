@@ -1,4 +1,4 @@
-import { Customer } from "../../domain/entities/customer";
+import { Customer } from "../../core/entities/customer";
 
 export interface ICustomerRepository {
   create(customer: Customer): Promise<boolean>;

@@ -1,6 +1,6 @@
 //customer postgress adapter
 
-import { Customer } from "../../domain/entities/customer";
+import { Customer } from "../../core/entities/customer";
 import { ICustomerRepository } from "../../app/repository/customer";
 
 export class PostgresCustomerRepository implements ICustomerRepository {
