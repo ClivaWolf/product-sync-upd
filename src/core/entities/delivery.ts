@@ -1,7 +1,7 @@
 import { ProductQuantities } from "./productQuantities";
 import { Storage } from "./storage";
 
-export class Order  {
+export class Delivery  {
         public id: string;
         
         public fromStorage: Storage;

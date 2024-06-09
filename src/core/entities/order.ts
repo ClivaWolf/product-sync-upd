@@ -1,9 +1,10 @@
+import { Delivery } from "./delivery";
 import { Storage } from "./storage";
 
 export class Order  {
         public id: string;
         
-        public storageId: Storage;
+        public storage: Storage;
 
-        public deliveryId: string;
+        public delivery: Delivery;
 }
