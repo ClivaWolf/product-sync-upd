@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ProductQuantitiesController } from '../controllers/productQuantities.controller';
 import { ProductQuantitiesUseCase } from '../use-cases/productQuantities/productQuantities.use-case';
 
-describe('ProductController', () => {
+describe('ProductQuantitiesController', () => {
   let controller: ProductQuantitiesController;
   let mockProductQuantitiesUseCase: any;
 
@@ -30,7 +30,7 @@ describe('ProductController', () => {
   });
 
   describe('getAll', () => {
-    it('should return all products', async () => {
+    it('should return all products quantities', async () => {
       const result = [{ id: '1', name: 'Test Product' }];
       mockProductQuantitiesUseCase.getAll.mockResolvedValue(result);
 
@@ -39,7 +39,7 @@ describe('ProductController', () => {
   });
 
   describe('get', () => {
-    it('should return a single product', async () => {
+    it('should return a single product quantities', async () => {
       const result = { id: '1', name: 'Test Product' };
       mockProductQuantitiesUseCase.get.mockResolvedValue(result);
 
@@ -48,7 +48,7 @@ describe('ProductController', () => {
   });
 
   describe('create', () => {
-    it('should create a product', async () => {
+    it('should create a product quantities', async () => {
       const dto = { product: 'test-product', quantity: 10 };
       const result = { ...dto, id: '2' };
       mockProductQuantitiesUseCase.create.mockResolvedValue(result);
@@ -58,13 +58,34 @@ describe('ProductController', () => {
   });
 
   describe('update', () => {
-    it('should update a product', async () => {
+    it('should update a product quantities', async () => {
       const id = '1';
-      const dto = { name: 'Updated Product', price: 200 };
+      const dto = { product: 'test-product-updated', quantity: 25 };
       const result = { ...dto, id };
       mockProductQuantitiesUseCase.update.mockResolvedValue(result);
 
       expect(await controller.update(id, dto)).toBe(result);
+    });
+  });
+
+  describe('delete', () => {
+    it('should delete a product quantities', async () => {
+      const id = '1';
+      mockProductQuantitiesUseCase.delete.mockResolvedValue(id);
+
+      expect(await controller.delete(id)).toBe(id);
+    });
+  });
+
+  describe('merge', () => {
+    it('should merge two product quantities', async () => {
+      const id = '1';
+      const otherId = '2';
+      const dto = { quantity: 50 };
+      const result = { ...dto, id };
+      mockProductQuantitiesUseCase.merge.mockResolvedValue(result);
+
+      expect(await controller.merge(id, otherId, dto)).toBe(result);
     });
   });
 });
