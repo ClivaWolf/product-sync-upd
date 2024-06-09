@@ -32,4 +32,8 @@ export class PostgreGenericRepository<T> implements IGenericRepository<T> {
     update(id: string, item: T) {
         return this._repository.update(id, item);
     }
+
+    delete(id: string) {
+        return this._repository.delete(id);
+    }
 }
