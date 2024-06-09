@@ -5,20 +5,20 @@ import { CreateProductQuantitiesDto, UpdateProductQuantitiesDto } from '../../co
 @Injectable()
 export class ProductQuantitiesFactoryService {
     public create(dto: CreateProductQuantitiesDto): ProductQuantities {
-        const newProduct = new ProductQuantities();
+        const newProductQuant = new ProductQuantities();
 
-        newProduct.quantity = dto.quantity;
-        newProduct.product = dto.product;
+        newProductQuant.quantity = dto.quantity;
+        newProductQuant.product = dto.product;
         
-        return newProduct;
+        return newProductQuant;
     }
 
     public update(dto: UpdateProductQuantitiesDto): ProductQuantities {
-        const newProduct = new ProductQuantities();
+        const newProductQuant = new ProductQuantities();
 
-        newProduct.quantity = dto.quantity;
-        newProduct.product = dto.product;
+        newProductQuant.quantity = dto.quantity;
+        newProductQuant.product = dto.product;
         
-        return newProduct;
+        return newProductQuant;
     }
 }
