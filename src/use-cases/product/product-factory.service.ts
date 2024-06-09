@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Product } from '../../core/entities'
-import { CreateProductDTO, UpdateProductDTO } from '../../core/dtos/product.dto';
+import { CreateProductDto, UpdateProductDto } from '../../core/dtos/product.dto';
 
 @Injectable()
 export class ProductFactoryService {
-    public create(dto: CreateProductDTO): Product {
+    public create(dto: CreateProductDto): Product {
         const newProduct = new Product();
 
         newProduct.name = dto.name;
@@ -15,7 +15,7 @@ export class ProductFactoryService {
         return newProduct;
     }
 
-    public update(dto: UpdateProductDTO): Product {
+    public update(dto: UpdateProductDto): Product {
         const newProduct = new Product();
 
         newProduct.name = dto.name;

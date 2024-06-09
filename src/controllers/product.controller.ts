@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Post, Body, Put } from '@nestjs/common';
 import { ProductUseCase } from '../use-cases/product/product.use-case';
-import { CreateProductDTO, UpdateProductDTO } from '../core/dtos/product.dto';
+import { CreateProductDto, UpdateProductDto } from '../core/dtos/product.dto';
 
 @Controller('api/product')
 export class ProductController {
@@ -19,14 +19,14 @@ export class ProductController {
     }
 
     @Post()
-    async create(@Body() dto: CreateProductDTO) {
+    async create(@Body() dto: CreateProductDto) {
         return this.productUseCase.create(dto);
     }
 
     @Put(':id')
     async update(
         @Param('id') id: string,
-        @Body() dto: UpdateProductDTO
+        @Body() dto: UpdateProductDto
     ) {
         return this.productUseCase.update(id, dto);
     }
