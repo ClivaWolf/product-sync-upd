@@ -34,13 +34,22 @@ export class ProductQuantitiesUseCase {
     }
 
     public async merge(productQuantitiesId: string, otherProductQuantitiesId: string, dto: UpdateProductQuantitiesDto): Promise<ProductQuantities> {
-        const productQuantities = await this.get(productQuantitiesId);
-        const otherProductQuantities = await this.get(otherProductQuantitiesId);
+        this.get(productQuantitiesId)
+        .then(productQuantities => {
+            if (!productQuantities) {
+                throw new Error('ProductQuantities not found');
+            }
+            this.get(otherProductQuantitiesId)
+            .then(async otherProductQuantities => {
+                if (!otherProductQuantities) {
+                    throw new Error('Other ProductQuantities not found');
+                }
 
-        productQuantities.quantity += otherProductQuantities.quantity;
-        await this.delete(otherProductQuantitiesId);
-
-        return this.dataServices.productQuantities.update(productQuantitiesId, productQuantities);
-
+                productQuantities.quantity += otherProductQuantities.quantity;
+                await this.delete(otherProductQuantitiesId);
+                return this.dataServices.productQuantities.update(productQuantitiesId, productQuantities);
+            })
+        })
+        return null;
     }
 }

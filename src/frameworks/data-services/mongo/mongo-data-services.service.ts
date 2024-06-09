@@ -20,9 +20,12 @@ export class MongoDataServices
   constructor(
     @InjectModel(Product.name)
     private ProductRepository: Model<ProductDocument>,
+    @InjectModel(ProductQuantities.name)
+    private ProductQuantitiesRepository: Model<ProductQuantities>,
   ) { }
 
   onApplicationBootstrap() {
     this.products = new MongoGenericRepository<Product>(this.ProductRepository);
+    this.productQuantities = new MongoGenericRepository<ProductQuantities>(this.ProductQuantitiesRepository);
   }
 }

@@ -8,4 +8,4 @@ import { ProductQuantitiesUseCase } from './productQuantities.use-case';
   providers: [ProductQuantitiesFactoryService, ProductQuantitiesUseCase],
   exports: [ProductQuantitiesFactoryService, ProductQuantitiesUseCase],
 })
-export class ProductUseCasesModule {}
+export class ProductQuantitiesUseCasesModule {}
