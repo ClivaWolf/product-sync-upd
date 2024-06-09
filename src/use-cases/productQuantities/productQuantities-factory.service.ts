@@ -8,6 +8,7 @@ export class ProductQuantitiesFactoryService {
         const newProduct = new ProductQuantities();
 
         newProduct.quantity = dto.quantity;
+        newProduct.product = dto.product;
         
         return newProduct;
     }
@@ -15,11 +16,8 @@ export class ProductQuantitiesFactoryService {
     public update(dto: UpdateProductQuantitiesDto): ProductQuantities {
         const newProduct = new ProductQuantities();
 
-        
-        // newProduct.name = dto.name;
-        // newProduct.price = dto.price;
-        // newProduct.description = dto.description;
-        // //newProduct.productQuantitiesId = dto.productQuantitiesId;
+        newProduct.quantity = dto.quantity;
+        newProduct.product = dto.product;
         
         return newProduct;
     }
