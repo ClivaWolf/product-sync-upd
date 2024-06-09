@@ -1,7 +1,10 @@
+import { Order } from "./order";
+import { ProductQuantities } from "./productQuantities";
+
 export class Storage  {
         public id: string;
         
-        public productQuantitiesId: string[];
+        public productQuantities: ProductQuantities[];
 
-        public ordersId: string[];
+        public orders: Order[];
 }

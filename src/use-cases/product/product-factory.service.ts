@@ -10,7 +10,7 @@ export class ProductFactoryService {
         newProduct.name = dto.name;
         newProduct.price = dto.price;
         newProduct.description = dto.description;
-        newProduct.productQuantitiesId = dto.productQuantitiesId;
+        //newProduct.productQuantitiesId = dto.productQuantitiesId;
         
         return newProduct;
     }
@@ -21,7 +21,7 @@ export class ProductFactoryService {
         newProduct.name = dto.name;
         newProduct.price = dto.price;
         newProduct.description = dto.description;
-        newProduct.productQuantitiesId = dto.productQuantitiesId;
+        //newProduct.productQuantitiesId = dto.productQuantitiesId;
         
         return newProduct;
     }
