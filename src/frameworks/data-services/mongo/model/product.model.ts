@@ -16,8 +16,8 @@ export class ProductForScheme extends Product {
   @Prop({ required: true })
   description: string;
   
-  @Prop({ required: true })
-  productQuantitiesId: string;
+  // @Prop({ required: true })
+  // productQuantitiesId: string;
 }
 
 export type ProductDocument = ProductForScheme & Document;

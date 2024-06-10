@@ -7,7 +7,7 @@ import { ProductQuantitiesForScheme } from './productQuantities.model';
 @Schema()
 export class StorageForScheme extends Storage {
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref : 'ProductQuantities', required: true })
+  @Prop({ type: mongoose.Schema.Types.Array, ref : 'ProductQuantities', required: true })
   productQuantities: ProductQuantitiesForScheme[];
 }
 

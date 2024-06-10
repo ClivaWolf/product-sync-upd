@@ -25,6 +25,8 @@ describe('StorageController', () => {
       create: jest.fn(),
       // update: jest.fn(),
       // delete: jest.fn(),
+      addProductQuantity: jest.fn(),
+      rebalance: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -65,6 +67,29 @@ describe('StorageController', () => {
       mockStorageUseCase.create.mockResolvedValue(result);
 
       expect(await controller.create(dto)).toBe(result);
+    });
+  });
+
+  describe('addProductQuantity', () => {
+    it('should add a product quantity to a storage', async () => {
+      const storageId = '1';
+      const productQuantityId = '2';
+      const result = { id: '2', name: 'Test Storage' };
+      mockStorageUseCase.addProductQuantity.mockResolvedValue(result);
+
+      expect(await controller.addProductQuantity(storageId, productQuantityId)).toBe(result);
+    });
+  });
+
+  describe('rebalance', () => {
+    it('should rebalance a storage quantities', async () => {
+      const storageId = '1';
+      const withOtherStorageId = '2';
+      const dto = { productQuantities: [mockProductQuantities]};
+      const result = { ...dto, id: '2' };
+      mockStorageUseCase.rebalance.mockResolvedValue(result);
+
+      expect(await controller.rebalance(storageId, withOtherStorageId, dto)).toBe(result);
     });
   });
 
