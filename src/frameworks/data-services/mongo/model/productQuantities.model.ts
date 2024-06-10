@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
 import { ProductQuantities } from 'src/core';
+import { ProductForScheme } from './product.model';
 
 
 @Schema()
@@ -10,8 +12,8 @@ export class ProductQuantitiesForScheme extends ProductQuantities {
   @Prop({ required: true })
   quantity: number;
   
-  @Prop({ required: true })
-  product: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref : 'Product', required: true })
+  product: ProductForScheme;
 }
 
 export type ProductQuantitiesDocument = ProductQuantitiesForScheme & Document;

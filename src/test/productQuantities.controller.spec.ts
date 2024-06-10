@@ -5,6 +5,12 @@ import { ProductQuantitiesUseCase } from '../use-cases/productQuantities/product
 describe('ProductQuantitiesController', () => {
   let controller: ProductQuantitiesController;
   let mockProductQuantitiesUseCase: any;
+  const mockProduct = {
+    id: '1',
+    name: 'Test Product',
+    description: 'Test Product Description',
+    price: 100,
+  };
 
   beforeEach(async () => {
     mockProductQuantitiesUseCase = {
@@ -49,7 +55,7 @@ describe('ProductQuantitiesController', () => {
 
   describe('create', () => {
     it('should create a product quantities', async () => {
-      const dto = { product: 'test-product', quantity: 10 };
+      const dto = { product: mockProduct, quantity: 10 };
       const result = { ...dto, id: '2' };
       mockProductQuantitiesUseCase.create.mockResolvedValue(result);
 
@@ -60,7 +66,7 @@ describe('ProductQuantitiesController', () => {
   describe('update', () => {
     it('should update a product quantities', async () => {
       const id = '1';
-      const dto = { product: 'test-product-updated', quantity: 25 };
+      const dto = { product: mockProduct, quantity: 25 };
       const result = { ...dto, id };
       mockProductQuantitiesUseCase.update.mockResolvedValue(result);
 
