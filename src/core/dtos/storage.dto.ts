@@ -4,9 +4,9 @@ import { ProductQuantities } from '../entities';
 
 export class CreateStorageDto {
         
-        @IsString()
-        @IsNotEmpty()
-        public productQuantities: ProductQuantities[];
+        // @IsString()
+        // @IsNotEmpty()
+        public productQuantities?: ProductQuantities[];
 
         // @IsString()
         // @IsNotEmpty()
