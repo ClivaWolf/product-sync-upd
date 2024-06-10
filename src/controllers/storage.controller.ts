@@ -30,4 +30,21 @@ export class StorageController {
     ) {
         return this.storageUseCase.update(id, dto);
     }
+
+    @Put(':id/add-product-quantity/:productQuantityId')
+    async addProductQuantity(
+        @Param('id') id: string,
+        @Param('productQuantityId') productQuantityId: string,
+    ) {
+        return this.storageUseCase.addProductQuantity(id, productQuantityId);
+    }
+
+    @Put(':id/rebalance/:otherStorageId')
+    async rebalance(
+        @Param('id') id: string,
+        @Param('otherStorageId') otherStorageId: string,
+        @Body() dto: UpdateStorageDto
+    ) {
+        return this.storageUseCase.rebalance(id, otherStorageId, dto);
+    }
 }

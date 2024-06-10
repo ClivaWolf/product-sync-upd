@@ -29,10 +29,31 @@ export class StorageUseCase {
         return this.dataServices.storages.update(StorageId, storage);
     }
 
+    public async addProductQuantity(StorageId: string, newProductQuantityId: string): Promise<Storage | Error> {
+        try {
+            const storage = await this.dataServices.storages.get(StorageId);
+            if (!storage) {
+                return new Error('Storage not found');
+            }
+    
+            const productQuantity = await this.dataServices.productQuantities.get(newProductQuantityId);
+            if (!productQuantity) {
+                return new Error('ProductQuantity not found');
+            }
+    
+            storage.productQuantities.push(productQuantity);
+    
+            return await this.dataServices.storages.update(StorageId, storage);
+        } catch (error) {
+            console.error(error);
+            return new Error('An error occurred while adding product quantity');
+        }
+    }
+
     public async rebalance(StorageId: string, withOtherStorageId: string, dto: UpdateStorageDto): Promise<Storage | Error> {
-        //вытаскиваем весь товар на текущем складе
-        //вытаскиваем весь товар на другом складе
-        //поочерёдно сравниваем товар нынешнего склада с товаром другого склада
+        //вытаскиваем весь товар на текущем складе и на другом складе
+        //по очереди проходимся по каждому продукту другого склада
+        //Если продукт из другого склада есть в текущем складе и
         //если товара в нынешнем складе меньше чем 1/2 от товара в другом складе, то
         //перемещаем из другого склада в нынешний третью часть
         //пример - в текущем складе 30 ед товара, в другом складе 100 ед. товара
@@ -41,26 +62,49 @@ export class StorageUseCase {
         try {
             const storage = await this.get(StorageId);
             const otherStorage = await this.get(withOtherStorageId);
-
-            if (!storage || !otherStorage) {
+    
+            if (!storage ||!otherStorage) {
                 return new Error('Storage not found');
             }
-
+    
             if (storage.productQuantities.length === 0 || otherStorage.productQuantities.length === 0) {
                 return new Error('Storage is empty');
             }
-
+    
+            console.log('rebalancing...');
             const storageQuantities = storage.productQuantities;
             const otherStorageQuantities = otherStorage.productQuantities;
 
-            otherStorageQuantities.forEach(otherStorageQuantityId => {
+            // !!!!! [NOT OPTIMAL SOLUTION] !!!!!
+            otherStorageQuantities.map(otherStorageQuantity => {
+                console.log(otherStorageQuantity.product.id);
 
+                storageQuantities.map(storageQuantity => {
+                    console.log(storageQuantity.product.id);
+
+                    if (storageQuantity.product.id.toString() == otherStorageQuantity.product.id.toString()) {
+                        console.log('found');
+
+                        if (storageQuantity.quantity < otherStorageQuantity.quantity / 2) {
+                            const transfer = Math.floor(otherStorageQuantity.quantity / 3);
+                            console.log(transfer);
+
+                            storageQuantity.quantity += transfer;
+                            otherStorageQuantity.quantity -= transfer;
+                        }
+                    }
+                })
             })
-
             
+            // После перемещения товаров обновляем информацию в базе данных
+            await this.dataServices.storages.update(StorageId, storage);
+            await this.dataServices.storages.update(withOtherStorageId, otherStorage);
+    
+            return storage;
         } catch (error) {
             console.error(error);
-            return error;
+            return new Error('An error occurred during rebalancing');
         }
     }
+    
 }
