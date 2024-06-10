@@ -71,18 +71,31 @@ export class StorageUseCase {
                 return new Error('Storage is empty');
             }
     
+            console.log('rebalancing...');
             const storageQuantities = storage.productQuantities;
             const otherStorageQuantities = otherStorage.productQuantities;
-    
-            otherStorageQuantities.forEach(otherStorageQuantity => {
-                const matchingProductInStorage = storageQuantities.find(quantity => quantity.product.id === otherStorageQuantity.product.id);
-                if (matchingProductInStorage && otherStorageQuantity.quantity > 2 * matchingProductInStorage.quantity) {
-                    const transferAmount = Math.floor(otherStorageQuantity.quantity / 3);
-                    matchingProductInStorage.quantity += transferAmount;
-                    otherStorageQuantity.quantity -= transferAmount;
-                }
-            });
-    
+
+            // !!!!! [NOT OPTIMAL SOLUTION] !!!!!
+            otherStorageQuantities.map(otherStorageQuantity => {
+                console.log(otherStorageQuantity.product.id);
+
+                storageQuantities.map(storageQuantity => {
+                    console.log(storageQuantity.product.id);
+
+                    if (storageQuantity.product.id.toString() == otherStorageQuantity.product.id.toString()) {
+                        console.log('found');
+
+                        if (storageQuantity.quantity < otherStorageQuantity.quantity / 2) {
+                            const transfer = Math.floor(otherStorageQuantity.quantity / 3);
+                            console.log(transfer);
+
+                            storageQuantity.quantity += transfer;
+                            otherStorageQuantity.quantity -= transfer;
+                        }
+                    }
+                })
+            })
+            
             // После перемещения товаров обновляем информацию в базе данных
             await this.dataServices.storages.update(StorageId, storage);
             await this.dataServices.storages.update(withOtherStorageId, otherStorage);
