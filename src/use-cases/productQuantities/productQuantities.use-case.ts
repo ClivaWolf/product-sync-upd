@@ -33,23 +33,23 @@ export class ProductQuantitiesUseCase {
         return this.dataServices.productQuantities.delete(productQuantitiesId);
     }
 
-    public async merge(productQuantitiesId: string, otherProductQuantitiesId: string, dto: UpdateProductQuantitiesDto): Promise<ProductQuantities> {
-        this.get(productQuantitiesId)
-        .then(productQuantities => {
+    public async merge(productQuantitiesId: string, otherProductQuantitiesId: string, dto: UpdateProductQuantitiesDto): Promise<ProductQuantities | Error> {
+        try {
+            const productQuantities = await this.get(productQuantitiesId);
             if (!productQuantities) {
-                throw new Error('ProductQuantities not found');
+                return new Error('ProductQuantities not found');
             }
-            this.get(otherProductQuantitiesId)
-            .then(async otherProductQuantities => {
-                if (!otherProductQuantities) {
-                    throw new Error('Other ProductQuantities not found');
-                }
-
-                productQuantities.quantity += otherProductQuantities.quantity;
-                await this.delete(otherProductQuantitiesId);
-                return this.dataServices.productQuantities.update(productQuantitiesId, productQuantities);
-            })
-        })
-        return null;
+            const otherProductQuantities = await this.get(otherProductQuantitiesId);
+            if (!otherProductQuantities || otherProductQuantitiesId === productQuantitiesId) {
+                return new Error('Other ProductQuantities not found');
+            }
+    
+            productQuantities.quantity += otherProductQuantities.quantity;
+            await this.delete(otherProductQuantitiesId);
+            return await this.dataServices.productQuantities.update(productQuantitiesId, productQuantities);
+        } catch (error) {
+            console.error(error);
+            return error;
+        }
     }
 }
