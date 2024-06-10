@@ -22,10 +22,13 @@ export class MongoDataServices
     private ProductRepository: Model<ProductDocument>,
     @InjectModel(ProductQuantities.name)
     private ProductQuantitiesRepository: Model<ProductQuantities>,
+    @InjectModel(Storage.name)
+    private StorageRepository: Model<Storage>
   ) { }
 
   onApplicationBootstrap() {
     this.products = new MongoGenericRepository<Product>(this.ProductRepository);
     this.productQuantities = new MongoGenericRepository<ProductQuantities>(this.ProductQuantitiesRepository);
+    this.storages = new MongoGenericRepository<Storage>(this.StorageRepository);
   }
 }

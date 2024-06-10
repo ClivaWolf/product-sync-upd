@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Storage } from 'src/core/entities/Storage';
+import { Storage } from 'src/core/entities/storage';
 import { IDataServices } from '../../core/abstracts/data-services.abstract';
-import { CreateStorageDto, UpdateStorageDto } from '../../core/dtos/Storage.dto';
-import { StorageFactoryService } from './Storage-factory.service';
+import { CreateStorageDto, UpdateStorageDto } from '../../core/dtos/storage.dto';
+import { StorageFactoryService } from './storage-factory.service';
 
 @Injectable()
 export class StorageUseCase {
@@ -54,7 +54,7 @@ export class StorageUseCase {
             const otherStorageQuantities = otherStorage.productQuantities;
 
             otherStorageQuantities.forEach(otherStorageQuantityId => {
-                
+
             })
 
             
