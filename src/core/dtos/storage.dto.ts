@@ -7,9 +7,9 @@ export class CreateStorageDto {
         @IsNotEmpty()
         public productQuantities: string[];
 
-        @IsString()
-        @IsNotEmpty()
-        public orders: string[];
+        // @IsString()
+        // @IsNotEmpty()
+        // public orders: string[];
 }
 
 export class UpdateStorageDto extends PartialType(CreateStorageDto) { }
