@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, Body, Put } from '@nestjs/common';
 import { StorageUseCase } from '../use-cases/storage/storage.use-case';
 import { CreateStorageDto, UpdateStorageDto } from '../core/dtos';
 
-@Controller('api/product')
+@Controller('api/storage')
 export class StorageController {
     constructor(
         private readonly storageUseCase: StorageUseCase
