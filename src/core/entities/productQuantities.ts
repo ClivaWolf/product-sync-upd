@@ -6,5 +6,5 @@ export class ProductQuantities {
 
         public quantity: number;
 
-        public product: Product|string;
+        public product: Product//|string;
 }

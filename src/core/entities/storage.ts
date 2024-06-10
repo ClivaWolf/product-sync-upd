@@ -6,5 +6,5 @@ export class Storage  {
         
         public productQuantities: ProductQuantities[];
 
-        public orders: Order[];
+        // public orders: Order[];
 }

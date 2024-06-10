@@ -8,8 +8,8 @@ export class CreateProductQuantitiesDto {
     public quantity: number;
 
     @IsNotEmpty()
-    @IsString()
-    public product: string;
+    // @IsString()
+    public product: Product;
 }
 
 export class UpdateProductQuantitiesDto extends PartialType(CreateProductQuantitiesDto) { }
