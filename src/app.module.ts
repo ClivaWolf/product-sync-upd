@@ -5,13 +5,15 @@ import { StorageController, ProductQuantitiesController, ProductController } fro
 import { ProductUseCasesModule } from './use-cases/product/product-use-case.module';
 import { ProductQuantitiesUseCasesModule } from './use-cases/productQuantities/productQuantities-use-case.module';
 import { StorageUseCasesModule } from './use-cases/storage/storage-use-case.module';
+import { FakePathFinderModule } from './use-cases/pathFinder/fakePathFinder.module';
 
 @Module({
   imports: [
     DataServicesModule,
     ProductUseCasesModule,
     ProductQuantitiesUseCasesModule,
-    StorageUseCasesModule
+    StorageUseCasesModule,
+    FakePathFinderModule
   ],
   controllers: [
     AppController,
