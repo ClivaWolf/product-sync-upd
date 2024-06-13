@@ -84,13 +84,20 @@ export class StorageUseCase {
 
                     if (storageQuantity.product.id.toString() == otherStorageQuantity.product.id.toString()) {
                         console.log('found');
+                        const tresholdStorage = storage.tresholdDifference
+                        const tresholdOtherStorage = otherStorage.tresholdDifference
 
-                        if (storageQuantity.quantity < otherStorageQuantity.quantity / 2) {
-                            const transfer = Math.floor(otherStorageQuantity.quantity / 3);
+                        const treshholdQuantity = storageQuantity.quantity * (1+tresholdStorage)
+                        const treshholdOtherQuantity = otherStorageQuantity.quantity * (1+tresholdOtherStorage)
+
+                        if (treshholdQuantity < treshholdOtherQuantity) {
+                            const transfer = Math.floor(tresholdStorage*tresholdOtherStorage*otherStorageQuantity.quantity);
                             console.log(transfer);
 
                             storageQuantity.quantity += transfer;
                             otherStorageQuantity.quantity -= transfer;
+
+                            console.log('products teleported');
                         }
                     }
                 })

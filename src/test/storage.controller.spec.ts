@@ -82,6 +82,20 @@ describe('StorageController', () => {
   });
 
   describe('rebalance', () => {
+    const mockStorage = {
+      id: '1',
+      longitude: 0,
+      latitude: 0,
+      tresholdDifference: 0.2,
+      productQuantities: [mockProductQuantities],
+    }
+    const mockOtherStorage = {
+      id: '2',
+      longitude: 0,
+      latitude: 0,
+      tresholdDifference: 0.5,
+      productQuantities: [mockProductQuantities],
+    }
     it('should rebalance a storage quantities', async () => {
       const storageId = '1';
       const withOtherStorageId = '2';
