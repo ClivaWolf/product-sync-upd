@@ -3,6 +3,7 @@ import { Storage } from 'src/core/entities/storage';
 import { IDataServices } from '../../core/abstracts/data-services.abstract';
 import { CreateStorageDto, UpdateStorageDto } from '../../core/dtos/storage.dto';
 import { StorageFactoryService } from './storage-factory.service';
+import { FakePathFinderUseCase } from '../pathFinder/fakePathFinder.use-case';
 
 @Injectable()
 export class StorageUseCase {
@@ -112,6 +113,22 @@ export class StorageUseCase {
             console.error(error);
             return new Error('An error occurred during rebalancing');
         }
+    }
+
+    //find nearest and rebalance
+    public async findNearestAndRebalance(StorageId: string, dto: UpdateStorageDto): Promise<Storage | Error> {
+        const storage = await this.get(StorageId);
+        if (!storage) {
+            return new Error('Storage not found');
+        }
+        const storages = await this.getAll();
+        if (!storages) {
+            return new Error('Storages not found');
+        }
+        const nearest = await FakePathFinderUseCase.findNearestStorage(storage.latitude, storage.longitude,storages);
+        
+        this.rebalance(StorageId, nearest.id, dto);
+        return storage;
     }
     
 }

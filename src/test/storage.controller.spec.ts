@@ -27,6 +27,7 @@ describe('StorageController', () => {
       // delete: jest.fn(),
       addProductQuantity: jest.fn(),
       rebalance: jest.fn(),
+      findNearestAndRebalance: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -82,20 +83,6 @@ describe('StorageController', () => {
   });
 
   describe('rebalance', () => {
-    const mockStorage = {
-      id: '1',
-      longitude: 0,
-      latitude: 0,
-      tresholdDifference: 0.2,
-      productQuantities: [mockProductQuantities],
-    }
-    const mockOtherStorage = {
-      id: '2',
-      longitude: 0,
-      latitude: 0,
-      tresholdDifference: 0.5,
-      productQuantities: [mockProductQuantities],
-    }
     it('should rebalance a storage quantities', async () => {
       const storageId = '1';
       const withOtherStorageId = '2';
@@ -107,24 +94,15 @@ describe('StorageController', () => {
     });
   });
 
-  // describe('update', () => {
-  //   it('should update a storage quantities', async () => {
-  //     const id = '1';
-  //     const dto = { storage: mockStorage, quantity: 25 };
-  //     const result = { ...dto, id };
-  //     mockStorageUseCase.update.mockResolvedValue(result);
+  describe('nearest-rebalance', () => {
+    it('should rebalance a storage quantities', async () => {
+      const storageId = '1';
+      const dto = { productQuantities: [mockProductQuantities]};
+      const result = { ...dto, id: '2' };
+      mockStorageUseCase.findNearestAndRebalance.mockResolvedValue(result);
 
-  //     expect(await controller.update(id, dto)).toBe(result);
-  //   });
-  // });
-
-  // describe('delete', () => {
-  //   it('should delete a storage quantities', async () => {
-  //     const id = '1';
-  //     mockStorageUseCase.delete.mockResolvedValue(id);
-
-  //     expect(await controller.delete(id)).toBe(id);
-  //   });
-  // });
+      expect(await controller.nearestRebalance(storageId, dto)).toBe(result);
+    });
+  });
 
 });
