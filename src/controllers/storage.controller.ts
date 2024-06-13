@@ -47,4 +47,11 @@ export class StorageController {
     ) {
         return this.storageUseCase.rebalance(id, otherStorageId, dto);
     }
+
+    @Post(':id/nearest-rebalance')
+    async nearestRebalance(
+        @Param('id') id: string,
+        @Body() dto: UpdateStorageDto) {
+        return this.storageUseCase.findNearestAndRebalance(id,dto);
+    }
 }

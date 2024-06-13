@@ -3,6 +3,7 @@ import { Storage } from 'src/core/entities/storage';
 import { IDataServices } from '../../core/abstracts/data-services.abstract';
 import { CreateStorageDto, UpdateStorageDto } from '../../core/dtos/storage.dto';
 import { StorageFactoryService } from './storage-factory.service';
+import { FakePathFinderUseCase } from '../pathFinder/fakePathFinder.use-case';
 
 @Injectable()
 export class StorageUseCase {
@@ -51,15 +52,8 @@ export class StorageUseCase {
     }
 
     public async rebalance(StorageId: string, withOtherStorageId: string, dto: UpdateStorageDto): Promise<Storage | Error> {
-        //вытаскиваем весь товар на текущем складе и на другом складе
-        //по очереди проходимся по каждому продукту другого склада
-        //Если продукт из другого склада есть в текущем складе и
-        //если товара в нынешнем складе меньше чем 1/2 от товара в другом складе, то
-        //перемещаем из другого склада в нынешний третью часть
-        //пример - в текущем складе 30 ед товара, в другом складе 100 ед. товара
-        //перемещаем 100/3 = 33 ед. из другого склада в нынешний склад
-        //в текущем складе теперь 63 ед. товара, в другом складе осталось 67 ед. товара
         try {
+            console.log('rebalancing...');
             const storage = await this.get(StorageId);
             const otherStorage = await this.get(withOtherStorageId);
     
@@ -84,13 +78,23 @@ export class StorageUseCase {
 
                     if (storageQuantity.product.id.toString() == otherStorageQuantity.product.id.toString()) {
                         console.log('found');
+                        const tresholdStorage = storage.tresholdDifference
+                        const tresholdOtherStorage = otherStorage.tresholdDifference
 
-                        if (storageQuantity.quantity < otherStorageQuantity.quantity / 2) {
-                            const transfer = Math.floor(otherStorageQuantity.quantity / 3);
+                        const treshholdQuantity = storageQuantity.quantity * (1+tresholdStorage)
+                        const treshholdOtherQuantity = otherStorageQuantity.quantity * (1+tresholdOtherStorage)
+
+                        console.log(treshholdQuantity, tresholdStorage, storageQuantity.quantity);
+                        console.log(treshholdOtherQuantity, tresholdOtherStorage, otherStorageQuantity.quantity);
+
+                        if (treshholdQuantity < treshholdOtherQuantity) {
+                            const transfer = Math.floor(tresholdStorage*(1-tresholdOtherStorage)*otherStorageQuantity.quantity);
                             console.log(transfer);
 
                             storageQuantity.quantity += transfer;
                             otherStorageQuantity.quantity -= transfer;
+
+                            console.log('products teleported');
                         }
                     }
                 })
@@ -105,6 +109,22 @@ export class StorageUseCase {
             console.error(error);
             return new Error('An error occurred during rebalancing');
         }
+    }
+
+    //find nearest and rebalance
+    public async findNearestAndRebalance(StorageId: string, dto: UpdateStorageDto): Promise<Storage | Error> {
+        const storage = await this.get(StorageId);
+        if (!storage) {
+            return new Error('Storage not found');
+        }
+        const storages = await this.getAll();
+        if (!storages) {
+            return new Error('Storages not found');
+        }
+        const nearest = await FakePathFinderUseCase.findNearestStorage(storage.latitude, storage.longitude,storages);
+        
+        this.rebalance(StorageId, nearest.id, dto);
+        return storage;
     }
     
 }

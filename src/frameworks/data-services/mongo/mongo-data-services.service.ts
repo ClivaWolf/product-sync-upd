@@ -11,7 +11,7 @@ export class MongoDataServices
   products: MongoGenericRepository<Product>;
   customers: IGenericRepository<Customer>;
   productQuantities: IGenericRepository<ProductQuantities>;
-
+ 
   storages: IGenericRepository<Storage>;
   orders: IGenericRepository<Order>;
   deliveries: IGenericRepository<Delivery>;

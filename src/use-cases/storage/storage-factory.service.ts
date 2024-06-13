@@ -8,6 +8,9 @@ export class StorageFactoryService {
         const newStorage = new Storage();
 
         newStorage.productQuantities = dto.productQuantities;
+        newStorage.latitude = dto.latitude;
+        newStorage.longitude = dto.longitude;
+        newStorage.tresholdDifference = dto.tresholdDifference;
         return newStorage;
     }
 
@@ -15,6 +18,9 @@ export class StorageFactoryService {
         const newStorage = new Storage();
 
         newStorage.productQuantities = dto.productQuantities;
+        newStorage.latitude = dto.latitude;
+        newStorage.longitude = dto.longitude;
+        newStorage.tresholdDifference = dto.tresholdDifference;
         //newStorage.StorageQuantitiesId = dto.StorageQuantitiesId;
         
         return newStorage;
