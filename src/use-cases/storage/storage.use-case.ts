@@ -52,15 +52,8 @@ export class StorageUseCase {
     }
 
     public async rebalance(StorageId: string, withOtherStorageId: string, dto: UpdateStorageDto): Promise<Storage | Error> {
-        //вытаскиваем весь товар на текущем складе и на другом складе
-        //по очереди проходимся по каждому продукту другого склада
-        //Если продукт из другого склада есть в текущем складе и
-        //если товара в нынешнем складе меньше чем 1/2 от товара в другом складе, то
-        //перемещаем из другого склада в нынешний третью часть
-        //пример - в текущем складе 30 ед товара, в другом складе 100 ед. товара
-        //перемещаем 100/3 = 33 ед. из другого склада в нынешний склад
-        //в текущем складе теперь 63 ед. товара, в другом складе осталось 67 ед. товара
         try {
+            console.log('rebalancing...');
             const storage = await this.get(StorageId);
             const otherStorage = await this.get(withOtherStorageId);
     
@@ -91,8 +84,11 @@ export class StorageUseCase {
                         const treshholdQuantity = storageQuantity.quantity * (1+tresholdStorage)
                         const treshholdOtherQuantity = otherStorageQuantity.quantity * (1+tresholdOtherStorage)
 
+                        console.log(treshholdQuantity, tresholdStorage, storageQuantity.quantity);
+                        console.log(treshholdOtherQuantity, tresholdOtherStorage, otherStorageQuantity.quantity);
+
                         if (treshholdQuantity < treshholdOtherQuantity) {
-                            const transfer = Math.floor(tresholdStorage*tresholdOtherStorage*otherStorageQuantity.quantity);
+                            const transfer = Math.floor(tresholdStorage*(1-tresholdOtherStorage)*otherStorageQuantity.quantity);
                             console.log(transfer);
 
                             storageQuantity.quantity += transfer;

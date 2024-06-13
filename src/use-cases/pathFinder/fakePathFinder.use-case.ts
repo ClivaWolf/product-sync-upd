@@ -20,7 +20,7 @@ export class FakePathFinderUseCase {
     static findNearestStorage(lat: number, lon: number, storages: Storage[]): Storage {
         storages.sort((a, b) => FakePathFinderUseCase.findPath(lat, lon, a.latitude, a.longitude) - FakePathFinderUseCase.findPath(lat, lon, b.latitude, b.longitude))
 
-        return storages[0]
+        return storages[1]
     }
 }
 

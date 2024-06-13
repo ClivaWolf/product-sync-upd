@@ -55,7 +55,7 @@ describe('FakePathFinderUseCase', () => {
 
     describe('findNearestStorage', () => {
         it('should return nearest storage', async () => {
-            const result = mockSstorages[0];
+            const result = mockSstorages[2];
             mockUseCase.find.mockResolvedValue(result);
             expect(await FakePathFinderUseCase.findNearestStorage(54.45, 32.00, mockSstorages)).toBe(result);
         });
