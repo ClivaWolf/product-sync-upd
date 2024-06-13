@@ -14,3 +14,4 @@ export abstract class IDataServices {
 
     abstract deliveries: IGenericRepository<Delivery>;
 }
+
