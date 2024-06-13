@@ -9,6 +9,15 @@ export class StorageForScheme extends Storage {
 
   @Prop({ type: mongoose.Schema.Types.Array, ref : 'ProductQuantities', required: true })
   productQuantities: ProductQuantitiesForScheme[];
+
+  @Prop({ required: true })
+  latitude: number;
+
+  @Prop({ required: true })
+  longitude: number;
+
+  @Prop({ required: true })
+  tresholdDifference: number;
 }
 
 export type StorageDocument = StorageForScheme & Document;

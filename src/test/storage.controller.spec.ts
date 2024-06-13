@@ -62,7 +62,7 @@ describe('StorageController', () => {
 
   describe('create', () => {
     it('should create a storage quantities', async () => {
-      const dto = { productQuantities: [mockProductQuantities]};
+      const dto = { productQuantities: [mockProductQuantities], longitude: 0, latitude: 0, tresholdDifference: 0 };
       const result = { ...dto, id: '2' };
       mockStorageUseCase.create.mockResolvedValue(result);
 

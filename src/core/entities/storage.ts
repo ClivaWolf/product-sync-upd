@@ -6,5 +6,12 @@ export class Storage  {
         
         public productQuantities: ProductQuantities[];
 
+        //for demonstration
+        latitude: number;
+
+        longitude: number;
+
+        tresholdDifference: number;
+
         // public orders: Order[];
 }
